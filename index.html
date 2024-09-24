@@ -1,0 +1,55 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@genymotion/device-web-player@3.2.2/dist/css/device-renderer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@genymotion/device-web-player@3.2.2/dist/js/device-renderer.min.js"></script>
+
+<div id="genymotion"></div>
+
+<script>
+  const webrtcAddress = 'wss://54.65.207.164/';
+
+    const options = {
+        template: "fullscreen",
+        paas: true,
+        gpsSpeedSupport: true,
+        translateHomeKey: true,
+        streamResolution: false,
+        fileUploadUrl: 'wss://54.65.207.164/fileupload/',
+        token: 'i-0efed5b8e2958a6ef',
+        volume: false,
+		rotation: false,
+		navbar: false,
+		power: false,
+		keyboard: false,
+		camera: false,
+		fileUpload: false,
+		clipboard: false,
+		battery: false,
+		gps: false,
+		capture: false,
+		identifiers: false,
+		network: false,
+		phone: false,
+		diskIO: false,
+		biometrics: false,
+        connectionFailedURL:
+            'https://www.genymotion.com/help/cloud-paas/iceconnectionstate-failed/',
+    };
+    
+    const { DeviceRendererFactory } = window.index;
+
+    let instance;
+    try { 
+        instance = new DeviceRendererFactory().setupRenderer(
+            document.getElementById('genymotion'),
+            webrtcAddress,
+            options,
+        );
+
+        // Disconnect the device player, closing any open data channels.
+        window.addEventListener('beforeunload', function() {
+            instance.destroy();
+        });
+    } catch (e) {
+        console.error('Error while loading the device player:', e);
+    }
+
+</script>
